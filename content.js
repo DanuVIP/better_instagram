@@ -5,9 +5,11 @@
   // body > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div > div > div > div:last-child > div:first-child
   // entdecken
   // body > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div:nth-child(3)
-
+  // previous hook
+  // section > main > div > div:nth-child(2) > div
+  
   const appendVolumeController = () => {
-    const parent = document.querySelector("section > main > div > div:nth-child(2) > div");
+    const parent = document.querySelector("body");
     if (!parent || document.getElementById('vol_controller')) return;
 
     // Create the volume controller
@@ -32,6 +34,9 @@
           position: fixed;
           bottom: 1rem;
           width: 20rem;
+          right: 1rem;
+          z-index: 99;
+          z-index: 99999;
         }
 
         div#vol_controller > div.input > label {
@@ -110,10 +115,11 @@
   };
 
   const setVideoVolume = (volume) => {
-    console.log('volume set to :'+volume);
     document.querySelectorAll('video').forEach(video => {
-      console.log(video);
       video.volume = volume;
+    });
+    document.querySelectorAll('audio').forEach(audio => {
+      audio.volume = volume;
     });
   };
 

@@ -1,6 +1,11 @@
 // content.js
 
 (function () {
+  // threads
+  // body > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div > div > div > div:last-child > div:first-child
+  // entdecken
+  // body > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div:nth-child(3)
+
   const appendVolumeController = () => {
     const parent = document.querySelector("section > main > div > div:nth-child(2) > div");
     if (!parent || document.getElementById('vol_controller')) return;
@@ -12,6 +17,15 @@
       <style>
         div[data-instancekey] {
           pointer-events: none;
+        }
+
+        body > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div:nth-child(3), 
+        body > div > div > div > div > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div > div > div > div:last-child > div:first-child {
+          display:none;
+        }
+          
+        video {
+          cursor: pointer;
         }
 
         div#vol_controller {
@@ -103,6 +117,22 @@
     });
   };
 
+  const togglePauseOnClick = () => {
+    document.querySelectorAll('video').forEach((video) => {
+      if (!video.dataset.clickListenerSet) {
+        video.dataset.clickListenerSet = "true"; // Mark as processed
+        video.addEventListener('click', () => {
+          if (video.paused) {
+            video.play();
+          } else {
+            video.pause();
+          }
+        });
+      }
+    });
+  };
+  
+
   const observeMutations = () => {
     const observer = new MutationObserver(() => {
       appendVolumeController();
@@ -112,7 +142,19 @@
     observer.observe(document.body, { childList: true, subtree: true });
   };
 
+  const observeVideoClickToggles = () => {
+    const observer = new MutationObserver(() => {
+      togglePauseOnClick();
+    });
+  
+    observer.observe(document.body, { childList: true, subtree: true });
+  };
+  
+
   // Initialize the functionality
   appendVolumeController();
   observeMutations();
+
+  togglePauseOnClick();
+  observeVideoClickToggles();
 })();

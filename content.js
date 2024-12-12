@@ -98,7 +98,7 @@
         }
       </style>
       <div class="input">
-        <label for="vol">Lautstärke:</label>
+        <label for="vol">Volume:</label>
         <input id="volumeSlider" type="range" min="0" max="100" style="--percent: 46%;" value="46">
       </div>
     `;
